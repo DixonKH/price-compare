@@ -4,9 +4,9 @@ services:
     image: postgres:15
     restart: always
     environment:
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: postgres
-      POSTGRES_DB: price_compare
+      POSTGRES_USER: dilshod
+      POSTGRES_PASSWORD: 12345
+      POSTGRES_DB: price_compare_db
     ports:
       - "5432:5432"
     volumes:

@@ -35,7 +35,7 @@ async register(dto: RegisterDto) {
       password: hashedPassword,
     },
   });
-  console.log("user:", user);
+  console.log("reg user:", user);
   return this.issueTokens(user.id, user.email);
 }
 
@@ -49,6 +49,7 @@ async login(dto: LoginDto) {
   const isValid = await bcrypt.compare(dto.password, user.password);
   if (!isValid) throw new UnauthorizedException('Invalid credentials');
 
+  console.log("login user:", user);
   return this.issueTokens(user.id, user.email);
 }
 
@@ -58,7 +59,7 @@ async issueTokens(userId: number, email: string) {
   const accessToken = await this.jwtService.signAsync(payload);
 
   const refreshToken = await this.jwtService.signAsync(payload, {
-    expiresIn: '7d',
+    expiresIn: '30d',
     secret: process.env.JWT_REFRESH_SECRET,
   });
 

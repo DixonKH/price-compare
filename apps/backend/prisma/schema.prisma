@@ -16,3 +16,39 @@ model User {
   provider  String?
   createdAt DateTime  @default(now())
 }
+
+model Product {
+  id        Int     @id  @default(autoincrement())
+  name      String
+  image     String?
+  brand     String?
+  category  Category @relation(fields: [categoryId], references: [id])
+  categoryId  Int
+  prices     Price[]
+  createdAt  DateTime @default(now())
+}
+
+model Category {
+  id            Int  @id  @default(autoincrement())
+  name          String
+  parentId      Int?
+  products      Product[]
+}
+
+model Store {
+  id    Int  @id @default(autoincrement())
+  name  String
+  url   String
+  prices Price[]
+}
+
+model Price {
+  id        Int  @id  @default(autoincrement())
+  product   Product   @relation(fields: [productId], references: [id])
+  productId Int
+  store     Store     @relation(fields: [storeId], references: [id])
+  storeId   Int
+  price     Float
+  productUrl String
+  updatedAt  DateTime  @updatedAt
+}
